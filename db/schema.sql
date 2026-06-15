@@ -1,5 +1,5 @@
--- Users: full name, email (username), hashed password, membership & admin flags
-CREATE TABLE IF NOT EXISTS users (
+-- App-specific tables to avoid conflicts with other apps on shared Postgres instances
+CREATE TABLE IF NOT EXISTS club_users (
   id SERIAL PRIMARY KEY,
   first_name VARCHAR(100) NOT NULL,
   last_name VARCHAR(100) NOT NULL,
@@ -10,14 +10,13 @@ CREATE TABLE IF NOT EXISTS users (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- Messages: title, body text, timestamp, linked author
-CREATE TABLE IF NOT EXISTS messages (
+CREATE TABLE IF NOT EXISTS club_messages (
   id SERIAL PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   text TEXT NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE
+  user_id INTEGER NOT NULL REFERENCES club_users(id) ON DELETE CASCADE
 );
 
-CREATE INDEX IF NOT EXISTS idx_messages_user_id ON messages(user_id);
-CREATE INDEX IF NOT EXISTS idx_messages_created_at ON messages(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_club_messages_user_id ON club_messages(user_id);
+CREATE INDEX IF NOT EXISTS idx_club_messages_created_at ON club_messages(created_at DESC);

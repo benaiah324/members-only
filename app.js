@@ -28,7 +28,7 @@ app.use(
   session({
     store: new pgSession({
       pool,
-      tableName: 'session',
+      tableName: 'club_session',
       createTableIfMissing: true,
     }),
     secret: process.env.SESSION_SECRET || 'dev-secret-change-me',
