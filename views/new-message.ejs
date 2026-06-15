@@ -1,0 +1,43 @@
+<%- include('partials/header', { pageTitle: 'New Message' }) %>
+
+<section class="form-section">
+  <h1>Create a new message</h1>
+  <p class="subtitle">Share a story with the club. Members will see your name; outsiders won't.</p>
+
+  <% if (errors && errors.length) { %>
+    <ul class="form-errors">
+      <% errors.forEach(function(err) { %>
+        <li><%= err.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <form action="/messages/new" method="POST" class="form" novalidate>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        value="<%= oldInput.title || '' %>"
+        required
+        maxlength="255"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="text">Message</label>
+      <textarea
+        id="text"
+        name="text"
+        rows="8"
+        required
+        maxlength="5000"
+      ><%= oldInput.text || '' %></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">Post message</button>
+  </form>
+</section>
+
+<%- include('partials/footer') %>

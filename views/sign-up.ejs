@@ -1,0 +1,98 @@
+<%- include('partials/header', { pageTitle: 'Sign Up' }) %>
+
+<section class="form-section">
+  <h1>Join the waitlist</h1>
+  <p class="subtitle">Create an account. Membership to the club requires a separate passcode.</p>
+
+  <% if (errors && errors.length) { %>
+    <ul class="form-errors">
+      <% errors.forEach(function(err) { %>
+        <li><%= err.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <form action="/sign-up" method="POST" class="form" novalidate>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="firstName">First name</label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          value="<%= oldInput.firstName || '' %>"
+          required
+          maxlength="100"
+          autocomplete="given-name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last name</label>
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          value="<%= oldInput.lastName || '' %>"
+          required
+          maxlength="100"
+          autocomplete="family-name"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        value="<%= oldInput.email || '' %>"
+        required
+        autocomplete="email"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+        minlength="8"
+        autocomplete="new-password"
+      />
+      <small>At least 8 characters with upper, lower, and a number.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirm password</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        required
+        autocomplete="new-password"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="adminPasscode">Admin passcode <span class="optional">(optional)</span></label>
+      <input
+        type="password"
+        id="adminPasscode"
+        name="adminPasscode"
+        autocomplete="off"
+      />
+      <small>Enter the admin secret to register as an administrator.</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">Create account</button>
+  </form>
+
+  <p class="form-footer">
+    Already have an account? <a href="/login">Log in</a>
+  </p>
+</section>
+
+<%- include('partials/footer') %>

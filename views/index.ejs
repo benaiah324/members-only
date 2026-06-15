@@ -1,0 +1,48 @@
+<%- include('partials/header', { pageTitle: 'Home' }) %>
+
+<section class="hero">
+  <h1>The Clubhouse</h1>
+  <p class="subtitle">
+    <% if (isMember || isAdmin) { %>
+      You're on the inside. Authors and dates are revealed below.
+    <% } else { %>
+      Stories from the club — authors remain anonymous to outsiders.
+    <% } %>
+  </p>
+</section>
+
+<% if (!messages.length) { %>
+  <p class="empty-state">No messages yet. Be the first to share a story.</p>
+<% } else { %>
+  <div class="message-list">
+    <% messages.forEach(function(message) { %>
+      <article class="message-card">
+        <header class="message-header">
+          <h2><%= message.title %></h2>
+          <% if (isMember || isAdmin) { %>
+            <p class="message-meta">
+              by <strong><%= message.first_name %> <%= message.last_name %></strong>
+              &middot;
+              <%= new Date(message.created_at).toLocaleString() %>
+            </p>
+          <% } else { %>
+            <p class="message-meta message-meta-anonymous">Author hidden &middot; date hidden</p>
+          <% } %>
+        </header>
+        <p class="message-body"><%= message.text %></p>
+        <% if (isAdmin) { %>
+          <form
+            action="/messages/<%= message.id %>/delete"
+            method="POST"
+            class="delete-form"
+            onsubmit="return confirm('Delete this message permanently?');"
+          >
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+        <% } %>
+      </article>
+    <% }) %>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>
