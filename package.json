@@ -4,9 +4,10 @@
   "description": "An exclusive clubhouse for anonymous member posts",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node scripts/migrate.js && node app.js",
     "dev": "nodemon app.js",
-    "db:setup": "node scripts/setup-db.js"
+    "db:setup": "node scripts/setup-db.js",
+    "db:migrate": "node scripts/migrate.js"
   },
   "keywords": [],
   "author": "",
@@ -21,9 +22,11 @@
     "express-session": "^1.19.0",
     "express-validator": "^7.3.2",
     "method-override": "^3.0.0",
-    "nodemon": "^3.1.14",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "pg": "^8.21.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
